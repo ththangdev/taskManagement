@@ -14,19 +14,23 @@
 # Configure Using Gemfile
 # gem "pg"
 #
+<% user = ENV.key?("POSTGRESQL_USER") ? ENV["POSTGRESQL_USER"] : "postgres" %>
+<% password = ENV.key?("POSTGRESQL_PASSWORD") ? ENV["POSTGRESQL_PASSWORD"] : "admin" %>
+<% db_server = ENV.key?("POSTGRESQL_SERVER") ? ENV["POSTGRESQL_SERVER"] : "localhost" %>
+
 default: &default
   adapter: postgresql
   encoding: unicode
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-
+ 
 development:
   <<: *default
   database: taskManagement_development
-  username: postgres
-  password: admin
-  host: localhost
+  username: <%= user %>
+  password: <%= password %>
+  host: <%= db_server %>
   port: 5432
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -61,9 +65,9 @@ development:
 test:
   <<: *default
   database: taskManagement_test
-  username: postgres
-  password: admin
-  host: localhost
+  username: <%= user %>
+  password: <%= password %>
+  host: <%= db_server %>
   port: 5432
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is

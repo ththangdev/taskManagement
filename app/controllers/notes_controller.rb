@@ -1,5 +1,4 @@
 class NotesController < ApplicationController
-  before_action :authorized
   before_action :set_note, only: %i[ show update destroy ]
 
   # GET /notes
@@ -33,7 +32,8 @@ class NotesController < ApplicationController
       render json: @note.errors, status: :unprocessable_entity
     end
   end
-
+  def auto_login
+  end
   # DELETE /notes/1
   def destroy
     @note.destroy
